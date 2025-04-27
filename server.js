@@ -22,7 +22,7 @@ app.use(cors({
 app.use(express.json());
 
 const JWT_SECRET = "eduPairSecret"; // Replace with your own secret
-app.options('*', cors());
+// app.options('*', cors());
 
 mongoose.connect('mongodb+srv://hgauba4:v87Gbk3V3UqmUTyH@cluster0.cz5qf9b.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("MongoDB connected"))
