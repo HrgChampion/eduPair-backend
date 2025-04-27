@@ -3,12 +3,26 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-
+const allowedOrigins = ['https://edu-pair-frontend.vercel.app'];
 const app = express();
-app.use(cors());
+
+app.use(cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin (like mobile apps or curl)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+    credentials: true, // if you're sending cookies or auth headers
+  }));
+
 app.use(express.json());
 
 const JWT_SECRET = "eduPairSecret"; // Replace with your own secret
+app.options('*', cors());
 
 mongoose.connect('mongodb+srv://hgauba4:v87Gbk3V3UqmUTyH@cluster0.cz5qf9b.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("MongoDB connected"))
