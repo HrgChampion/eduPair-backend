@@ -84,8 +84,8 @@ app.post('/offer-session', authMiddleware, async (req, res) => {
 app.get('/sessions', authMiddleware, async (req, res) => {
     try {
       const availableSessions = await Session.find({
-        students: { $ne: req.user.username }, // 👈 user is not already enrolled
-        teacher: { $ne: req.user.username }    // 👈 not the teacher's own session
+        students: { $ne: req.user.username }, // user is not already enrolled
+        teacher: { $ne: req.user.username }    // not the teacher's own session
       });
   
       res.json(availableSessions);
@@ -192,7 +192,6 @@ app.get('/dashboard', authMiddleware, async (req, res) => {
   });
   
 
-// Enroll in a session (learn)
 // Enroll in a session (learn)
 app.post('/sessions/:id/enroll', authMiddleware, async (req, res) => {
     const sessionId = req.params.id;
